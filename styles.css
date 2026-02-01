@@ -1,0 +1,16 @@
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1b1b2f;
+  color: #fff;
+}
+
+* flip-card {
+     height: 100px;
+     weight: 100px;
+     text-aline: center;
+}
+
