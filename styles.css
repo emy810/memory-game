@@ -5,7 +5,7 @@ body {
 .flip-card {
   width: 250px;
   aspect-ratio: 1;
-  background-image: url(./images/card-picture.jpg);
+  /* background-image: "url(./images/card-picture.jpg)"; */
   background-size: contain;
   border-radius: 20px;
   border: 2px solid black;
@@ -14,15 +14,40 @@ body {
   transition: transform 1s;
   transform-style: preserve-3d;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(./images/card-backside.jpg);
+}
+
+.emoji {
+  width: 100%;
+  font-size: 8rem;
+  text-align: center;
+  display: none;
+}
+
+.emoji-flipped {
+  display: block;
 }
 
 .flip-card-flipped {
-  background-image: url(./images/card-backside.jpg);
-
   /* transform: rotateY(180deg); */
+  background-image: none;
 }
 
 .flip {
   transform: rotateY(180deg);
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+}
+
+.cards-container {
+  margin-block: 30px;
+  border: 2px solid black;
+  border-radius: 20px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
 }
