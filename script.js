@@ -54,9 +54,21 @@ const cardDetails = [
 const emojiArray = cardDetails.map((item) => item.emoji);
 console.log(emojiArray);
 
-const cardsContainer = document.querySelector(".cards-container");
+
 
 let numberOfCards = 10;
+let revealCount = 0;
+let timer =0;
+let timerInterval = null;
+let gameStarted = false;
+
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+
+const cardsContainer = document.querySelector(".cards-container");
+const revealCountEl = document.getElementById("reveal-count");
+const timerEl = document.getElementById("timer");
 
 function createCards(numberOfCards) {
   const gameEmojiArray = [];
@@ -68,6 +80,36 @@ function createCards(numberOfCards) {
   }
 
   console.log(gameEmojiArray);
+
+function checkMatch() {
+  const firstEmoji = firstCard.querySelector(".emoji").textContent;
+  const secondEmoji = secondCard.querySelector(".emoji").textContent;
+
+  if (firstEmoji === secondEmoji) {
+    resetTurn();
+  } else {
+    lockBoard = true;
+
+    setTimeout(() => {
+      // Flip back both cards
+      firstCard.classList.remove("flip-card-flipped");
+      firstCard.querySelector(".emoji").classList.remove("emoji-flipped");
+      firstCard.classList.remove("flip");
+
+      secondCard.classList.remove("flip-card-flipped");
+      secondCard.querySelector(".emoji").classList.remove("emoji-flipped");
+      secondCard.classList.remove("flip");
+
+      resetTurn();
+    }, 1000);
+  }
+}
+
+function resetTurn() {
+  [firstCard, secondCard] = [null, null];
+  lockBoard = false;
+}
+
 
   const shuffledGameEmojiArray = gameEmojiArray
     .map((value) => ({ value, sort: Math.random() }))
@@ -85,14 +127,35 @@ function createCards(numberOfCards) {
     newFlipCard.append(emojiSpan);
 
     cardsContainer.append(newFlipCard);
-
+ 
     newFlipCard.addEventListener("click", () => {
-      newFlipCard.classList.toggle("flip");
+// Start timer on the first reveal
+      if (!gameStarted) {
+        gameStarted = true;
+        timerInterval = setInterval(() => {
+          timer++;
+          timerEl.textContent = timer;
+        }, 1000);
+      }
+//count reveals
+      revealCount++;
+      revealCountEl.textContent = revealCount;
+
+      //newFlipCard(cardDetails, emojjiSpan);
+
+newFlipCard.classList.toggle("flip");
 
       setTimeout(() => {
         newFlipCard.classList.toggle("flip-card-flipped");
         emojiSpan.classList.toggle("emoji-flipped");
       }, 300);
+      
+      if (!firstCard) {
+        firstCard = newFlipCard;
+        return;
+      }
+      secondCard = newFlipCard;
+      checkMatch();
     });
   }
 }
