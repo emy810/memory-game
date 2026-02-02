@@ -1,54 +1,14 @@
 const cardDetails = [
-  {
-    id: 1,
-    name: "green-apple",
-    emoji: "🍏",
-  },
-  {
-    id: 2,
-    name: "grape",
-    emoji: "🍇",
-  },
-  {
-    id: 3,
-    name: "hamburger",
-    emoji: "🍔",
-  },
-  {
-    id: 4,
-    name: "avocado",
-    emoji: "🥑",
-  },
-  {
-    id: 5,
-    name: "pizza",
-    emoji: "🍕",
-  },
-  {
-    id: 6,
-    name: "sushi",
-    emoji: "🍣",
-  },
-  {
-    id: 7,
-    name: "sushi",
-    emoji: "🍰",
-  },
-  {
-    id: 8,
-    name: "popcorn",
-    emoji: "🍿",
-  },
-  {
-    id: 9,
-    name: "cherry",
-    emoji: "🍒",
-  },
-  {
-    id: 10,
-    name: "donut",
-    emoji: "🍩",
-  },
+  { id: 1, name: "green-apple", emoji: "🍏", },
+  { id: 2, name: "grape",       emoji: "🍇", },
+  { id: 3, name: "hamburger",   emoji: "🍔", },
+  { id: 4, name: "avocado",     emoji: "🥑", },
+  { id: 5, name: "pizza",       emoji: "🍕", },
+  { id: 6, name: "sushi",       emoji: "🍣", },
+  { id: 7, name: "sushi",       emoji: "🍰", },
+  { id: 8, name: "popcorn",     emoji: "🍿", },
+  { id: 9, name: "cherry",      emoji: "🍒", },
+  { id: 10,name: "donut", emoji: "🍩", },
 ];
 
 const emojiArray = cardDetails.map((item) => item.emoji);
@@ -61,6 +21,10 @@ let revealCount = 0;
 let timer =0;
 let timerInterval = null;
 let gameStarted = false;
+
+
+
+
 
 
 
@@ -104,12 +68,19 @@ function createCards(numberOfCards) {
         gameStarted = true;
         timerInterval = setInterval(() => {
           timer++;
-          timerEl.textContent = timer;
+          const minutes = Math.floor(timer / 60);
+          const seconds = timer % 60;
+
+          timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+
         }, 1000);
       }
 //count reveals
       revealCount++;
       revealCountEl.textContent = revealCount;
+      
+      
+
 
       //newFlipCard(cardDetails, emojjiSpan);
 
@@ -119,15 +90,9 @@ newFlipCard.classList.toggle("flip");
         newFlipCard.classList.toggle("flip-card-flipped");
         emojiSpan.classList.toggle("emoji-flipped");
       }, 300);
-      
-      if (!firstCard) {
-        firstCard = newFlipCard;
-        return;
-      }
-      secondCard = newFlipCard;
-      checkMatch();
+    
     });
   }
-}
+  }
 
 createCards(numberOfCards);
