@@ -3,6 +3,42 @@ body {
   text-align: center;
 }
 
+h1 {
+  margin: 0;
+}
+
+.counter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.counter-p {
+  border: 2px solid black;
+  padding: 8px;
+  border-radius: 10px;
+  width: 150px;
+}
+
+span {
+  color: red;
+  font-weight: 800;
+}
+
+.cards-container {
+  margin-block: 10px;
+  border: 2px solid black;
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+}
+
 .flip-card {
   width: 250px;
   aspect-ratio: 1;
@@ -40,15 +76,4 @@ body {
 .flip {
   transform: rotateY(180deg);
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
-}
-
-.cards-container {
-  margin-block: 30px;
-  border: 2px solid black;
-  border-radius: 20px;
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 15px;
 }
