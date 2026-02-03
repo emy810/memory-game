@@ -75,19 +75,19 @@ function createCards(numberOfCards) {
 
         }, 1000);
       }
-//count reveals
+
+     const isAlreadyRevealed = newFlipCard.classList.contains("flip-card-flipped");
+    if (isAlreadyRevealed) {
       revealCount++;
-      revealCountEl.textContent = revealCount;
+      revealCountEl.textContent = revealCount; 
+    }
       
-      
-
-
-      //newFlipCard(cardDetails, emojjiSpan);
+   //newFlipCard(cardDetails, emojjiSpan);
 
 newFlipCard.classList.toggle("flip");
 
-      setTimeout(() => {
-        newFlipCard.classList.toggle("flip-card-flipped");
+      setTimeout(() => { 
+      newFlipCard.classList.toggle("flip-card-flipped");
         emojiSpan.classList.toggle("emoji-flipped");
       }, 300);
     
