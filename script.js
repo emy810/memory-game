@@ -14,7 +14,7 @@ const cardDetails = [
 const emojiArray = cardDetails.map((item) => item.emoji);
 console.log(emojiArray);
 
-let numberOfCards = 10;
+let numberOfCards = 8;
 let revealCount = 0;
 let timer = 0;
 let timerInterval = null;
@@ -63,23 +63,22 @@ function createCards(numberOfCards) {
 
           timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
         }, 1000);
-      
       }
-     const isAlreadyRevealed = newFlipCard.classList.contains("flip-card-flipped");
-    if (isAlreadyRevealed) {
-      revealCount++;
-      revealCountEl.textContent = revealCount; 
-    }
-      
-   //newFlipCard(cardDetails, emojjiSpan);
+      const isAlreadyRevealed =
+        newFlipCard.classList.contains("flip-card-flipped");
+      if (isAlreadyRevealed) {
+        revealCount++;
+        revealCountEl.textContent = revealCount;
+      }
 
-newFlipCard.classList.toggle("flip");
+      //newFlipCard(cardDetails, emojjiSpan);
 
-      setTimeout(() => { 
-      newFlipCard.classList.toggle("flip-card-flipped");
+      newFlipCard.classList.toggle("flip");
+
+      setTimeout(() => {
+        newFlipCard.classList.toggle("flip-card-flipped");
         emojiSpan.classList.toggle("emoji-flipped");
-
-  }, 300);
+      }, 300);
 
       newFlipCard.flipTimeout = setTimeout(() => {
         newFlipCard.classList.remove("flip-card-flipped");
