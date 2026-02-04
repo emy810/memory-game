@@ -66,7 +66,7 @@ function createCards(numberOfCards) {
       
       }
      const isAlreadyRevealed = newFlipCard.classList.contains("flip-card-flipped");
-    if (isAlreadyRevealed) {
+    if (!isAlreadyRevealed) {
       revealCount++;
       revealCountEl.textContent = revealCount; 
     }
