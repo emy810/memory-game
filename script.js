@@ -20,6 +20,11 @@ let timer = 0;
 let timerInterval = null;
 let gameStarted = false;
 
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let matchedPairs = 0;
+
 const cardsContainer = document.querySelector(".cards-container");
 const revealCountEl = document.getElementById("reveal-count");
 const timerEl = document.getElementById("timer");
@@ -74,21 +79,59 @@ const isAlreadyRevealed = newFlipCard.classList.contains("flip-card-flipped");
 
 
       //newFlipCard(cardDetails, emojjiSpan);
-
-      newFlipCard.classList.toggle("flip");
+  if (lockBoard || newFlipCard === firstCard) return;
+      
+     newFlipCard.classList.toggle("flip");
 
       setTimeout(() => {
         newFlipCard.classList.toggle("flip-card-flipped");
         emojiSpan.classList.toggle("emoji-flipped");
       }, 300);
 
-      newFlipCard.flipTimeout = setTimeout(() => {
-        newFlipCard.classList.remove("flip-card-flipped");
-        emojiSpan.classList.remove("emoji-flipped");
-        newFlipCard.classList.remove("flip");
-      }, 4000);
+       if (!firstCard) {
+        firstCard = newFlipCard;
+        return;
+      }
+
+      secondCard = newFlipCard;
+      checkMatch();
     });
   }
 }
 
 createCards(numberOfCards);
+
+function checkMatch() {
+  const firstEmoji = firstCard.querySelector(".emoji").textContent;
+  const secondEmoji = secondCard.querySelector(".emoji").textContent;
+
+  if (firstEmoji === secondEmoji) {
+
+   firstCard.classList.add("matched");
+    secondCard.classList.add("matched");
+
+    //firstCard.querySelector(".emoji").classList.add("emoji-flipped");
+     //secondCard.querySelector(".emoji").classList.add("emoji-flipped");
+   
+     matchedPairs++;
+    resetTurn();
+    checkWin();
+  } else {
+    lockBoard = true;
+
+    setTimeout(() => {
+      firstCard.classList.remove("flip-card-flipped", "flip");
+      firstCard.querySelector(".emoji").classList.remove("emoji-flipped");
+
+      secondCard.classList.remove("flip-card-flipped", "flip");
+      secondCard.querySelector(".emoji").classList.remove("emoji-flipped");
+
+      resetTurn();
+    }, 1000);
+  }
+}
+
+function resetTurn() {
+  [firstCard, secondCard] = [null, null];
+  lockBoard = false;
+}
