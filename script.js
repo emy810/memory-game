@@ -110,8 +110,7 @@ function checkMatch() {
    firstCard.classList.add("matched");
     secondCard.classList.add("matched");
 
-    //firstCard.querySelector(".emoji").classList.add("emoji-flipped");
-     //secondCard.querySelector(".emoji").classList.add("emoji-flipped");
+    
    
      matchedPairs++;
     resetTurn();
