@@ -19,6 +19,11 @@ let timer = 0;
 let timerInterval = null;
 let gameStarted = false;
 
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let matchedPairs = 0;
+
 const cardsContainer = document.querySelector(".cards-container");
 const revealCountEl = document.getElementById("reveal-count");
 const timerEl = document.getElementById("timer");
@@ -89,11 +94,57 @@ function createCards(numberOfCards) {
 
   for (let i = 0; i < shuffledGameEmojiArray.length; i++) {
     const { card, emojiSpan } = createCard(shuffledGameEmojiArray[i]);
+      //newFlipCard(cardDetails, emojjiSpan);
+  if (lockBoard || newFlipCard === firstCard) return;
+      
+     newFlipCard.classList.toggle("flip");
 
     cardsContainer.append(card);
 
     card.addEventListener("click", () => handleCardClick(card, emojiSpan));
+       if (!firstCard) {
+        firstCard = newFlipCard;
+        return;
+      }
+
+      secondCard = newFlipCard;
+      checkMatch();
+    });
   }
 }
 
 createCards(numberOfCards);
+
+function checkMatch() {
+  const firstEmoji = firstCard.querySelector(".emoji").textContent;
+  const secondEmoji = secondCard.querySelector(".emoji").textContent;
+
+  if (firstEmoji === secondEmoji) {
+
+   firstCard.classList.add("matched");
+    secondCard.classList.add("matched");
+
+    
+   
+     matchedPairs++;
+    resetTurn();
+    checkWin();
+  } else {
+    lockBoard = true;
+
+    setTimeout(() => {
+      firstCard.classList.remove("flip-card-flipped", "flip");
+      firstCard.querySelector(".emoji").classList.remove("emoji-flipped");
+
+      secondCard.classList.remove("flip-card-flipped", "flip");
+      secondCard.querySelector(".emoji").classList.remove("emoji-flipped");
+
+      resetTurn();
+    }, 1000);
+  }
+}
+
+function resetTurn() {
+  [firstCard, secondCard] = [null, null];
+  lockBoard = false;
+}
