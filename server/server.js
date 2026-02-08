@@ -13,7 +13,14 @@ const knex = knexLibrary({
   },
 });
 
-app.get("/", async (request, response) => {
+app.use(express.static("../"));
+
+// app.get("/", async (request, response) => {
+//   const cards = await knex.raw(`SELECT * FROM cards`);
+//   response.json(cards);
+// });
+
+app.get("/cards", async (request, response) => {
   const cards = await knex.raw(`SELECT * FROM cards`);
   response.json(cards);
 });

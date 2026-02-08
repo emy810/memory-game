@@ -1,19 +1,18 @@
-const cardDetails = [
-  { id: 1, name: "green-apple", emoji: "🍏" },
-  { id: 2, name: "grape", emoji: "🍇" },
-  { id: 3, name: "hamburger", emoji: "🍔" },
-  { id: 4, name: "avocado", emoji: "🥑" },
-  { id: 5, name: "pizza", emoji: "🍕" },
-  { id: 6, name: "sushi", emoji: "🍣" },
-  { id: 7, name: "cake", emoji: "🍰" },
-  { id: 8, name: "popcorn", emoji: "🍿" },
-  { id: 9, name: "cherry", emoji: "🍒" },
-  { id: 10, name: "donut", emoji: "🍩" },
-];
+async function getCards() {
+  try {
+    const response = await fetch("http://localhost:3000/cards");
+    const cardDetails = await response.json();
+    const emojiArray = cardDetails.map((item) => item.emoji);
 
-const emojiArray = cardDetails.map((item) => item.emoji);
+    console.log(cardDetails, "card details");
+    createCards(emojiArray, numberOfCards);
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
+}
 
 let numberOfCards = 8;
+
 let revealCount = 0;
 let timer = 0;
 let timerInterval = null;
@@ -79,7 +78,7 @@ function handleCardClick(card) {
   setTimeout(checkMatch, 600);
 }
 
-function createCards(numberOfCards) {
+function createCards(emojiArray, numberOfCards) {
   const gameEmojiArray = [];
 
   for (let round = 0; round < 2; round++) {
@@ -95,9 +94,7 @@ function createCards(numberOfCards) {
 
   for (let i = 0; i < shuffledGameEmojiArray.length; i++) {
     const { card, emojiSpan } = createCard(shuffledGameEmojiArray[i]);
-
     cardsContainer.append(card);
-
     card.addEventListener("click", () => handleCardClick(card, emojiSpan));
   }
 }
@@ -112,8 +109,6 @@ function closeCard(card) {
   card.querySelector(".emoji").classList.remove("emoji-flipped");
 }
 
-createCards(numberOfCards);
-
 function checkMatch() {
   const firstEmoji = firstCard.querySelector(".emoji").textContent;
   const secondEmoji = secondCard.querySelector(".emoji").textContent;
@@ -121,6 +116,13 @@ function checkMatch() {
   if (firstEmoji === secondEmoji) {
     firstCard.classList.add("matched");
     secondCard.classList.add("matched");
+
+    matchedPairs++;
+
+    if (matchedPairs === numberOfCards / 2) {
+      clearInterval(timerInterval);
+    }
+
     resetTurn();
   } else {
     setTimeout(() => {
@@ -135,3 +137,5 @@ function resetTurn() {
   [firstCard, secondCard] = [null, null];
   lockBoard = false;
 }
+
+getCards();
