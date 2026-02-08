@@ -1,29 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game </title>
-    <link rel="stylesheet"  href= styles.css/>
-</head>
-<body>
-    <div class=" flip-card">
-        <div class="flip-card-inner">
-    <div class="flip-card-front">
-     <h1>Memory Game</h1>
-    
-     <img src="https://i.postimg.cc/g24Qcmfm/card-backside.jpg" alt="card"/>
-
-</div> <div class="flip-card-back">
-    <img src="https://i.postimg.cc/dVmkLSBh/card-picture.jpg" alt="card"/>
-
-</div>
-
-</div>
-    
-        
-            
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory game</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>Memory game</h1>
+    <div class="counter-container">
+      <p class="counter-p">Reveals: <span id="reveal-count">0</span></p>
+      <p class="counter-p">Time: <span id="timer">0</span></p>
     </div>
-</body>
+
+    <div class="cards-container"></div>
+  </body>
 </html>
