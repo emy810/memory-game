@@ -77,3 +77,38 @@ span {
   cursor: default;
   pointer-events: none;
 }
+
+.matched {
+  animation: match-pop 0.4s ease forwards;
+
+}
+@keyframes match-pop {
+ 0% {
+  transform: scale(1);
+  opacity: 1;
+ }
+ 50% {
+  transform: scale(1.2);
+  opacity: 1;
+ }
+ 100% {
+  transform: scale(0);
+  opacity: 0;
+ }
+}
+
+#restart-btn {
+  display: block;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: 2px solid black;
+  background: #f0f0f0;
+  cursor: pointer;
+  margin: auto;
+
+}
+
+#restart-btn:hover {
+  background: #ddd;
+}

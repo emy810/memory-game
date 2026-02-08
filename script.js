@@ -138,4 +138,28 @@ function resetTurn() {
   lockBoard = false;
 }
 
+function checkWin() {
+if (matchedPairs === numberOfCards/2) {
+  alert("You Win");
+ }
+}
+
+function restartGame() {
+  timer = 0;
+  revealCount = 0;
+  matchedPairs = 0;
+  gameStarted = false;
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+
+  clearInterval(timerInterval);
+  timerEl.textContent = "0:00";
+  revealCountEl.textContent = "0";
+
+  cardsContainer.innerHTML = "";
+  getCards();
+}
+
+document.getElementById("restart-btn").addEventListener("click", restartGame);
 getCards();
