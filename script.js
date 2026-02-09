@@ -26,6 +26,11 @@ let matchedPairs = 0;
 const cardsContainer = document.querySelector(".cards-container");
 const revealCountEl = document.getElementById("reveal-count");
 const timerEl = document.getElementById("timer");
+const gameBoard = document.getElementById("gameBoard");
+const gameButton = document.getElementById("gameButton");
+
+
+
 
 function createCard(emoji) {
   const card = document.createElement("div");
@@ -121,6 +126,8 @@ function checkMatch() {
 
     if (matchedPairs === numberOfCards / 2) {
       clearInterval(timerInterval);
+      gameButton.textContent = "Restart the game";
+      checkWin ();
     }
 
     resetTurn();
@@ -144,7 +151,7 @@ if (matchedPairs === numberOfCards/2) {
  }
 }
 
-function restartGame() {
+function resetGame() {
   timer = 0;
   revealCount = 0;
   matchedPairs = 0;
@@ -159,7 +166,11 @@ function restartGame() {
 
   cardsContainer.innerHTML = "";
   getCards();
+
+  gameButton.textContent = "Reset the game";
 }
 
-document.getElementById("restart-btn").addEventListener("click", restartGame);
+gameButton.addEventListener("click", () => {
+      resetGame ();
+} );
 getCards();

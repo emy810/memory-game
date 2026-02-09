@@ -97,18 +97,19 @@ span {
  }
 }
 
-#restart-btn {
+#gameButton {
   display: block;
   padding: 12px 25px;
   font-size: 1.1rem;
-  border-radius: 10px;
-  border: 2px solid black;
+  border-radius: 8px;
+  border: none;
   background: #f0f0f0;
   cursor: pointer;
-  margin: auto;
+  margin: 20px auto;
+  transition: background-color 0.2s ease;
 
 }
 
-#restart-btn:hover {
-  background: #ddd;
+#gameButton:hover {
+  background: #1e90ff;
 }
