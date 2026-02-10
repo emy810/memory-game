@@ -28,6 +28,7 @@ const revealCountEl = document.getElementById("reveal-count");
 const timerEl = document.getElementById("timer");
 const gameBoard = document.getElementById("gameBoard");
 const gameButton = document.getElementById("gameButton");
+gameButton.addEventListener("click", resetGame);
 
 
 
@@ -127,7 +128,9 @@ function checkMatch() {
     if (matchedPairs === numberOfCards / 2) {
       clearInterval(timerInterval);
       gameButton.textContent = "Restart the game";
-      checkWin ();
+      const winDialog = document.getElementById("winDialog");
+       winDialog.showModal ();
+    
     }
 
     resetTurn();
@@ -145,13 +148,11 @@ function resetTurn() {
   lockBoard = false;
 }
 
-function checkWin() {
-if (matchedPairs === numberOfCards/2) {
-  alert("You Win");
- }
-}
+
+
 
 function resetGame() {
+
   timer = 0;
   revealCount = 0;
   matchedPairs = 0;
@@ -165,12 +166,15 @@ function resetGame() {
   revealCountEl.textContent = "0";
 
   cardsContainer.innerHTML = "";
-  getCards();
-
+  
+   document.getElementById("winDialog").close();
   gameButton.textContent = "Reset the game";
+  
+  getCards();
 }
 
-gameButton.addEventListener("click", () => {
-      resetGame ();
+document.getElementById("playAgainBtn").addEventListener("click", () => {
+ document.getElementById("winDialog").close();     
+  resetGame ();
 } );
-getCards();
+

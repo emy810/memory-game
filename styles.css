@@ -113,3 +113,32 @@ span {
 #gameButton:hover {
   background: #1e90ff;
 }
+
+#winDialog {
+  padding: 30px 40px;
+  border: none;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+#winDialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#playAgainBtn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#playAgainBtn:hover {
+  background-color: #1e90ff;
+}
