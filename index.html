@@ -8,22 +8,31 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <h1>Memory Game</h1>
-    <div class="counter-container">
-      <p class="counter-p">Reveals: <span id="reveal-count">0</span></p>
-      <p class="counter-p">Time: <span id="timer">0</span></p>
+    <div class="game">
+      <h1>Memory Game</h1>
+      <div class="level-container">
+        <h2>Choose Difficulty:</h2>
+        <div class="levels">
+          <button class="level-button" disabled data-level="8">Easy (8)</button>
+          <button class="level-button" data-level="12">Medium (12)</button>
+          <button class="level-button" data-level="16">Hard (16)</button>
+        </div>
+      </div>
+      <div class="counter-container">
+        <p class="counter-p">Reveals: <span id="reveal-count">0</span></p>
+        <p class="counter-p">Time: <span id="timer">0</span></p>
+      </div>
+
+      <div class="cards-container"></div>
+
+      <div class="buttons">
+        <button id="gameButton" style="display: none">Reset game</button>
+      </div>
     </div>
 
-    <div class="cards-container"></div>
-      
-    <div class="buttons">
-    <button id="startButton">Start Game</button>
-    <button id = "gameButton" style="display:none;">Reset game</button>
-    </div>
-    
-    <dialog id = "winDialog">
+    <dialog id="winDialog">
       <h2>🎉 Congratulations You Won!🎉</h2>
-      <button id =  "playAgainBtn">Play Again</button>
+      <button id="playAgainBtn">Play Again</button>
     </dialog>
   </body>
 </html>

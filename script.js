@@ -3,8 +3,6 @@ async function getCards() {
     const response = await fetch("http://localhost:3000/cards");
     const cardDetails = await response.json();
     const emojiArray = cardDetails.map((item) => item.emoji);
-
-    console.log(cardDetails, "card details");
     createCards(emojiArray, numberOfCards);
   } catch (err) {
     console.error("Fetch error:", err);
@@ -27,24 +25,18 @@ const cardsContainer = document.querySelector(".cards-container");
 const revealCountEl = document.getElementById("reveal-count");
 const timerEl = document.getElementById("timer");
 
-const startButton  = document.getElementById("startButton");
 const gameButton = document.getElementById("gameButton");
 
-startButton.addEventListener("click", startGame);
+const levelButtons = document.querySelectorAll(".levels button");
+
 gameButton.addEventListener("click", resetGame);
-
-function startGame() {
-  startButton.style.display = "none";   // hide Start Game
-  gameButton.style.display = "block";   // show Reset Game
-
-  resetGame ();
- } // builds the cards and resets everything
-
-
 
 function createCard(emoji) {
   const card = document.createElement("div");
   card.classList.add("flip-card");
+
+  const levelClass = getLevelClass(numberOfCards);
+  card.classList.add(levelClass);
 
   const emojiSpan = document.createElement("span");
   emojiSpan.innerHTML = emoji;
@@ -139,8 +131,7 @@ function checkMatch() {
       gameButton.style.display = "none";
       document.body.classList.add("win-bg");
       const winDialog = document.getElementById("winDialog");
-       winDialog.showModal ();
-    
+      winDialog.showModal();
     }
 
     resetTurn();
@@ -158,13 +149,7 @@ function resetTurn() {
   lockBoard = false;
 }
 
-/*function getCards() {
-  createCards(emojiArray, numberOfCards);
-}*/
-
-
 function resetGame() {
-
   timer = 0;
   revealCount = 0;
   matchedPairs = 0;
@@ -178,20 +163,39 @@ function resetGame() {
   revealCountEl.textContent = "0";
 
   cardsContainer.innerHTML = "";
-  
-   document.getElementById("winDialog").close();
-   document.body.classList.remove("win-bg");
-   gameButton.style.display = "block";
+
+  document.getElementById("winDialog").close();
+  document.body.classList.remove("win-bg");
+  gameButton.style.display = "block";
   gameButton.textContent = "Reset Game";
-  
+
   getCards();
 }
 
-playAgainBtn.addEventListener("click", () => {
-winDialog.close(); 
- startButton.style.display = "block";
- gameButton.style.display = "none";    
- 
-});
- 
+function getLevelClass(numberOfCards) {
+  if (numberOfCards === 8) return "easy";
+  if (numberOfCards === 12) return "medium";
+  if (numberOfCards === 16) return "hard";
+  return "easy";
+}
 
+levelButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    levelButtons.forEach((btn) => {
+      btn.disabled = false;
+      btn.classList.remove("active");
+    });
+    button.disabled = true;
+    button.classList.add("active");
+    numberOfCards = Number(button.dataset.level);
+    resetGame();
+  });
+});
+
+playAgainBtn.addEventListener("click", () => {
+  winDialog.close();
+
+  resetGame();
+});
+
+document.addEventListener("DOMContentLoaded", resetGame);
