@@ -1,20 +1,16 @@
-const cardDetails = [
-  { id: 1, name: "green-apple", emoji: "🍏" },
-  { id: 2, name: "grape", emoji: "🍇" },
-  { id: 3, name: "hamburger", emoji: "🍔" },
-  { id: 4, name: "avocado", emoji: "🥑" },
-  { id: 5, name: "pizza", emoji: "🍕" },
-  { id: 6, name: "sushi", emoji: "🍣" },
-  { id: 7, name: "sushi", emoji: "🍰" },
-  { id: 8, name: "popcorn", emoji: "🍿" },
-  { id: 9, name: "cherry", emoji: "🍒" },
-  { id: 10, name: "donut", emoji: "🍩" },
-];
-
-const emojiArray = cardDetails.map((item) => item.emoji);
-console.log(emojiArray);
+async function getCards() {
+  try {
+    const response = await fetch("http://localhost:3000/cards");
+    const cardDetails = await response.json();
+    const emojiArray = cardDetails.map((item) => item.emoji);
+    createCards(emojiArray, numberOfCards);
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
+}
 
 let numberOfCards = 8;
+
 let revealCount = 0;
 let timer = 0;
 let timerInterval = null;
@@ -29,104 +25,122 @@ const cardsContainer = document.querySelector(".cards-container");
 const revealCountEl = document.getElementById("reveal-count");
 const timerEl = document.getElementById("timer");
 
-function createCards(numberOfCards) {
-  const gameEmojiArray = [];
+const gameButton = document.getElementById("gameButton");
 
-  for (let i = 0; i < 2; i++) {
-    for (let i = 0; i < numberOfCards / 2; i++) {
-      gameEmojiArray.push(emojiArray[i]);
-    }
+const levelButtons = document.querySelectorAll(".levels button");
+
+gameButton.addEventListener("click", resetGame);
+
+function createCard(emoji) {
+  const card = document.createElement("div");
+  card.classList.add("flip-card");
+
+  const levelClass = getLevelClass(numberOfCards);
+  card.classList.add(levelClass);
+
+  const emojiSpan = document.createElement("span");
+  emojiSpan.innerHTML = emoji;
+  emojiSpan.classList.add("emoji");
+
+  card.append(emojiSpan);
+
+  return { card, emojiSpan };
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timer++;
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+
+    timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  }, 1000);
+}
+
+function handleCardClick(card) {
+  if (lockBoard) return;
+  if (card.classList.contains("matched")) return;
+  if (card === firstCard) return;
+
+  if (!gameStarted) {
+    gameStarted = true;
+    startTimer();
   }
 
-  console.log(gameEmojiArray);
+  if (!card.classList.contains("flip-card-flipped")) {
+    revealCount++;
+    revealCountEl.textContent = revealCount;
+  }
+
+  openCard(card);
+
+  if (!firstCard) {
+    firstCard = card;
+    return;
+  }
+
+  secondCard = card;
+  lockBoard = true;
+
+  setTimeout(checkMatch, 600);
+}
+
+function createCards(emojiArray, numberOfCards) {
+  const gameEmojiArray = [];
+
+  for (let round = 0; round < 2; round++) {
+    for (let idx = 0; idx < numberOfCards / 2; idx++) {
+      gameEmojiArray.push(emojiArray[idx]);
+    }
+  }
 
   const shuffledGameEmojiArray = gameEmojiArray
     .map((value) => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
 
-  console.log("game emoji array shuffled" + shuffledGameEmojiArray);
-
   for (let i = 0; i < shuffledGameEmojiArray.length; i++) {
-    let newFlipCard = document.createElement("div");
-    newFlipCard.classList.add("flip-card");
-    let emojiSpan = document.createElement("span");
-    emojiSpan.innerHTML = shuffledGameEmojiArray[i];
-    emojiSpan.classList.add("emoji");
-    newFlipCard.append(emojiSpan);
-
-    cardsContainer.append(newFlipCard);
-
-    newFlipCard.addEventListener("click", () => {
-      // Start timer on the first reveal
-      if (!gameStarted) {
-        gameStarted = true;
-        timerInterval = setInterval(() => {
-          timer++;
-          const minutes = Math.floor(timer / 60);
-          const seconds = timer % 60;
-
-          timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
-        }, 1000);
-      }
-
-const isAlreadyRevealed = newFlipCard.classList.contains("flip-card-flipped");
-
-  if (!isAlreadyRevealed) {
-    revealCount++;
-    revealCountEl.textContent = revealCount;
-  }
-
-
-      //newFlipCard(cardDetails, emojjiSpan);
-  if (lockBoard || newFlipCard === firstCard) return;
-      
-     newFlipCard.classList.toggle("flip");
-
-      setTimeout(() => {
-        newFlipCard.classList.toggle("flip-card-flipped");
-        emojiSpan.classList.toggle("emoji-flipped");
-      }, 300);
-
-       if (!firstCard) {
-        firstCard = newFlipCard;
-        return;
-      }
-
-      secondCard = newFlipCard;
-      checkMatch();
-    });
+    const { card, emojiSpan } = createCard(shuffledGameEmojiArray[i]);
+    cardsContainer.append(card);
+    card.addEventListener("click", () => handleCardClick(card, emojiSpan));
   }
 }
 
-createCards(numberOfCards);
+function openCard(card) {
+  card.classList.add("flip", "flip-card-flipped");
+  card.querySelector(".emoji").classList.add("emoji-flipped");
+}
+
+function closeCard(card) {
+  card.classList.remove("flip", "flip-card-flipped");
+  card.querySelector(".emoji").classList.remove("emoji-flipped");
+}
 
 function checkMatch() {
   const firstEmoji = firstCard.querySelector(".emoji").textContent;
   const secondEmoji = secondCard.querySelector(".emoji").textContent;
 
   if (firstEmoji === secondEmoji) {
-
-   firstCard.classList.add("matched");
+    firstCard.classList.add("matched");
     secondCard.classList.add("matched");
 
-    
-   
-     matchedPairs++;
+    matchedPairs++;
+
+    if (matchedPairs === numberOfCards / 2) {
+      clearInterval(timerInterval);
+      gameButton.style.display = "none";
+      document.body.classList.add("win-bg");
+      const winDialog = document.getElementById("winDialog");
+      winDialog.showModal();
+    }
+
     resetTurn();
-    checkWin();
   } else {
-    lockBoard = true;
-
     setTimeout(() => {
-      firstCard.classList.remove("flip-card-flipped", "flip");
-      firstCard.querySelector(".emoji").classList.remove("emoji-flipped");
-
-      secondCard.classList.remove("flip-card-flipped", "flip");
-      secondCard.querySelector(".emoji").classList.remove("emoji-flipped");
-
+      closeCard(firstCard);
+      closeCard(secondCard);
       resetTurn();
-    }, 1000);
+    }, 800);
   }
 }
 
@@ -134,3 +148,54 @@ function resetTurn() {
   [firstCard, secondCard] = [null, null];
   lockBoard = false;
 }
+
+function resetGame() {
+  timer = 0;
+  revealCount = 0;
+  matchedPairs = 0;
+  gameStarted = false;
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+
+  clearInterval(timerInterval);
+  timerEl.textContent = "0:00";
+  revealCountEl.textContent = "0";
+
+  cardsContainer.innerHTML = "";
+
+  document.getElementById("winDialog").close();
+  document.body.classList.remove("win-bg");
+  gameButton.style.display = "block";
+  gameButton.textContent = "Reset Game";
+
+  getCards();
+}
+
+function getLevelClass(numberOfCards) {
+  if (numberOfCards === 8) return "easy";
+  if (numberOfCards === 12) return "medium";
+  if (numberOfCards === 16) return "hard";
+  return "easy";
+}
+
+levelButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    levelButtons.forEach((btn) => {
+      btn.disabled = false;
+      btn.classList.remove("active");
+    });
+    button.disabled = true;
+    button.classList.add("active");
+    numberOfCards = Number(button.dataset.level);
+    resetGame();
+  });
+});
+
+playAgainBtn.addEventListener("click", () => {
+  winDialog.close();
+
+  resetGame();
+});
+
+document.addEventListener("DOMContentLoaded", resetGame);
