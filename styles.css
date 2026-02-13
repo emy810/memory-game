@@ -81,7 +81,7 @@ h2 {
   background-color: white;
 }
 
-span {
+.highlight {
   color: red;
   font-weight: 800;
 }
@@ -120,17 +120,17 @@ span {
   border-color: #0008ed;
 }
 
-.flip-card.easy {
+.easy {
   width: 150px;
   height: 150px;
 }
 
-.flip-card.medium {
+.medium {
   width: 120px;
   height: 120px;
 }
 
-.flip-card.hard {
+.hard {
   width: 90px;
   height: 90px;
 }
@@ -178,7 +178,7 @@ span {
   }
 }
 
-#gameButton {
+.game-button {
   display: inline-block;
   padding: 12px 25px;
 
@@ -186,21 +186,20 @@ span {
   border: 2px solid black;
   background: #f0f0f0;
   cursor: pointer;
-  margin: 0;
+  margin: 0 auto;
   transition: background-color 0.2s ease;
 }
 
-#gameButton:hover {
+.game-button:hover {
   background-color: #1e90ff;
   transform: scale(1.05);
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
+.hidden {
+  display: none;
 }
 
-#winDialog {
+.win-dialog {
   padding: 30px 40px;
   border: none;
   border-radius: 12px;
@@ -209,11 +208,11 @@ span {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
-#winDialog::backdrop {
+.win-dialog::backdrop {
   background: rgba(0, 0, 0, 0.4);
 }
 
-#playAgainBtn {
+.play-again-btn {
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #4caf50;
@@ -225,14 +224,14 @@ span {
   transition: background-color 0.2s ease;
 }
 
-#playAgainBtn:hover {
+.play-again-btn:hover {
   background-color: #1e90ff;
 }
 
 @media (max-width: 700px) {
-  .flip-card.easy,
-  .flip-card.medium,
-  .flip-card.hard {
+  .easy,
+  .medium,
+  .hard {
     width: 90px;
     height: 90px;
   }
@@ -254,9 +253,9 @@ span {
     grid-template-columns: repeat(4, minmax(70px, 1fr));
   }
 
-  .flip-card.easy,
-  .flip-card.medium,
-  .flip-card.hard {
+  .easy,
+  .medium,
+  .hard {
     width: 70px;
     height: 70px;
   }

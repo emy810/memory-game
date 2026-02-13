@@ -166,8 +166,8 @@ function resetGame() {
 
   document.getElementById("winDialog").close();
   document.body.classList.remove("win-bg");
-  gameButton.style.display = "block";
-  gameButton.textContent = "Reset Game";
+  
+  document.getElementById(gameButton).classList.remove(hidden);S
 
   getCards();
 }
