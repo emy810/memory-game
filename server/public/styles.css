@@ -1,0 +1,267 @@
+body {
+  margin-block: 15px;
+  text-align: center;
+  background-image: url(./images/card-backside.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+
+  font-family: Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h2 {
+  margin-block: 8px;
+  font-size: 20px;
+}
+
+.game {
+  background-color: antiquewhite;
+  border: 2px solid black;
+  border-radius: 50px;
+  padding: 10px;
+}
+
+.levels {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.level-button {
+  font-weight: 700;
+  border: 2px solid black;
+  padding: 8px 25px;
+  border-radius: 10px;
+  width: 150px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.level-button:hover {
+  scale: 1.05;
+  box-shadow: rgb(38, 57, 77) 0px 10px 15px -10px;
+}
+
+.level-button:disabled {
+  cursor: default;
+  opacity: 0.7;
+  border-color: gray;
+}
+
+.level-button:disabled:hover {
+  box-shadow: none;
+  scale: 1;
+}
+
+.counter-container {
+  display: flex;
+  margin-top: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.counter-p {
+  border: 2px solid black;
+  padding: 8px;
+  border-radius: 10px;
+  width: 150px;
+  font-size: 14px;
+  background-color: white;
+}
+
+span {
+  color: red;
+  font-weight: 800;
+}
+
+.cards-container {
+  margin-block: 15px;
+  border: 2px solid black;
+  border-radius: 20px;
+  display: inline-grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 10px;
+  background-color: white;
+}
+
+.flip-card {
+  width: 150px;
+  height: 150px;
+  background-size: contain;
+  border-radius: 20px;
+  border: 2px solid black;
+  perspective: 1000px;
+  cursor: pointer;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(./images/card-backside.jpg);
+}
+
+.flip-card:hover {
+  scale: 1.02;
+  border-color: #0008ed;
+}
+
+.flip-card.easy {
+  width: 150px;
+  height: 150px;
+}
+
+.flip-card.medium {
+  width: 120px;
+  height: 120px;
+}
+
+.flip-card.hard {
+  width: 90px;
+  height: 90px;
+}
+
+.emoji {
+  width: 100%;
+  font-size: 5rem;
+  text-align: center;
+  display: none;
+}
+
+.emoji-flipped {
+  display: block;
+}
+
+.flip-card-flipped {
+  background-image: none;
+}
+
+.flip {
+  transform: rotateY(180deg);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+}
+
+.flip-card.matched {
+  cursor: default;
+  pointer-events: none;
+}
+
+.matched {
+  animation: match-pop 0.4s ease forwards;
+}
+@keyframes match-pop {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+#gameButton {
+  display: inline-block;
+  padding: 12px 25px;
+
+  border-radius: 8px;
+  border: 2px solid black;
+  background: #f0f0f0;
+  cursor: pointer;
+  margin: 0;
+  transition: background-color 0.2s ease;
+}
+
+#gameButton:hover {
+  background-color: #1e90ff;
+  transform: scale(1.05);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+#winDialog {
+  padding: 30px 40px;
+  border: none;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+#winDialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#playAgainBtn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#playAgainBtn:hover {
+  background-color: #1e90ff;
+}
+
+@media (max-width: 700px) {
+  .flip-card.easy,
+  .flip-card.medium,
+  .flip-card.hard {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 500px) {
+  .levels {
+    flex-direction: column;
+    padding-bottom: 8px;
+    border-bottom: 1px solid black;
+  }
+
+  .counter-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cards-container {
+    grid-template-columns: repeat(4, minmax(70px, 1fr));
+  }
+
+  .flip-card.easy,
+  .flip-card.medium,
+  .flip-card.hard {
+    width: 70px;
+    height: 70px;
+  }
+
+  .emoji {
+    font-size: 3rem;
+  }
+}
