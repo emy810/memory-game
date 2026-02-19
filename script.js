@@ -1,6 +1,6 @@
 async function getCards() {
   try {
-    const response = await fetch("https://ae-memory-game.onrender.com/");
+    const response = await fetch("https://ae-memory-game.onrender.com/cards");
     const cardDetails = await response.json();
     const emojiArray = cardDetails.map((item) => item.emoji);
     createCards(emojiArray, numberOfCards);
