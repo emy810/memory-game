@@ -113,6 +113,7 @@ span {
   align-items: center;
   justify-content: center;
   background-image: url("/images/card-backside.jpg");
+  background-size: cover;
 }
 
 .flip-card:hover {
