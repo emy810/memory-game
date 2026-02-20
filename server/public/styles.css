@@ -110,7 +110,6 @@ span {
   transform-style: preserve-3d;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
   display: flex;
-  position: relative;
   align-items: center;
   justify-content: center;
   background-image: url(./images/card-backside.jpg);
@@ -140,8 +139,7 @@ span {
   width: 100%;
   font-size: 5rem;
   text-align: center;
-  display: flex;
-  position: absolute;
+  display: none;
 }
 
 .emoji-flipped {
