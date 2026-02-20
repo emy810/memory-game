@@ -16,6 +16,9 @@ const knex = knexLibrary({
 app.use(cors());
 
 app.use(express.static("server/public"));
+app.get("/", (req, res) => {
+  res.sendFile(process.cwd() + "/server/public/index.html");
+})
 
 app.get("/cards", async (request, response) => {
   const cards = await knex.raw(`SELECT * FROM cards`);
