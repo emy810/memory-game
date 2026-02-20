@@ -1,6 +1,7 @@
 import knexLibrary from "knex";
 import express from "express";
 import cors from "cors";
+import path from "path";
 
 const app = express();
 const port = 3000;
@@ -13,12 +14,13 @@ const knex = knexLibrary({
     filename: "../db/game.sqlite",
   },
 });
+
 app.use(cors());
 
-app.use(express.static("server/public"));
+app.use(express.static(path.resolve("server/public")));
 app.get("/", (req, res) => {
-  res.sendFile(process.cwd() + "/server/public/index.html");
-})
+  res.sendFile(path.resolve("server/public/index.html"));
+});
 
 app.get("/cards", async (request, response) => {
   const cards = await knex.raw(`SELECT * FROM cards`);
