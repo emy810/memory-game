@@ -1,7 +1,7 @@
 body {
   margin-block: 15px;
   text-align: center;
-  background-image: url(./images/card-backside.jpg);
+  background-image: url("/images/card-backside.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
@@ -112,7 +112,7 @@ span {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url(./images/card-backside.jpg);
+  background-image: url("/images/card-backside.jpg");
 }
 
 .flip-card:hover {
