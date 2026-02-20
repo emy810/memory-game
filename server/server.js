@@ -17,9 +17,9 @@ const knex = knexLibrary({
 
 app.use(cors());
 
-app.use(express.static(path.resolve("server/public")));
+app.use(express.static(path.resolve("public")));
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve("server/public/index.html"));
+  res.sendFile(path.resolve("public/index.html"));
 });
 
 app.get("/cards", async (request, response) => {
